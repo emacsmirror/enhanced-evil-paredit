@@ -36,33 +36,39 @@
 (require 'evil)
 (require 'paredit)
 
+(defgroup modern-evil-paredit nil
+  "Evil Customization group for paredit-style structural editing."
+  :group 'modern-evil-paredit
+  :prefix "modern-evil-paredit-")
+
+(defvar modern-evil-paredit-mode-map (make-sparse-keymap)
+  "Keymap for `modern-evil-paredit-mode'.")
+
 ;;;###autoload
 (define-minor-mode modern-evil-paredit-mode
   "Minor mode for setting up Evil with paredit in a single buffer."
-  :keymap '()
-  (let ((prev-state evil-state))
-    (evil-normal-state)
-    (evil-change-state prev-state)))
+  :lighter " EParedit"
+  :group 'modern-evil-paredit
+  :keymap modern-evil-paredit-mode-map)
 
-(defun modern-evil-paredit-check-region (beg end)
-  "Check region from BEG to END."
-  (if (fboundp 'paredit-check-region-state)
-      (if (and beg end)
-          ;; Check that region begins and ends in a sufficiently similar
-          ;; state, so that deleting it will leave the buffer balanced.
-          (save-excursion
-            (goto-char beg)
-            (let* ((state (paredit-current-parse-state))
-                   (state* (parse-partial-sexp beg end nil nil state)))
-              (paredit-check-region-state state state*))))
-    (paredit-check-region-for-delete beg end)))
+(defun modern-evil-paredit--check-region (beg end)
+  "Ensure region from BEG to END maintains parenthesis balance.
+Signals an error if deleting the region would break structure."
+  (when (and beg end)
+    (if (fboundp 'paredit-check-region-state)
+        (save-excursion
+          (goto-char beg)
+          (let* ((state (paredit-current-parse-state))
+                 (state* (parse-partial-sexp beg end nil nil state)))
+            (paredit-check-region-state state state*)))
+      (paredit-check-region-for-delete beg end))))
 
 (evil-define-operator modern-evil-paredit-yank (beg end type register yank-handler)
-  "Saves the characters in motion into the `kill-ring'."
+  "Yank text from BEG to END of TYPE into REGISTER with YANK-HANDLER."
   :move-point nil
   :repeat nil
   (interactive "<R><x><y>")
-  (modern-evil-paredit-check-region beg end)
+  (modern-evil-paredit--check-region beg end)
   (cond
    ((eq type 'block)
     (evil-yank-rectangle beg end register yank-handler))
@@ -132,7 +138,7 @@ Save in REGISTER or in the `kill-ring' with YANK-HANDLER."
 
 (evil-define-operator modern-evil-paredit-change
   (beg end type register yank-handler delete-func)
-  "Change text from BEG to END with TYPE respecting parenthesis.
+  "Change text from BEG to END of TYPE using REGISTER and YANK-HANDLER.
 Save in REGISTER or the `kill-ring' with YANK-HANDLER.
 DELETE-FUNC is a function for deleting text, default `evil-delete'.
 If TYPE is `line', insertion starts on an empty line.
@@ -153,7 +159,7 @@ of the block."
 
 (evil-define-operator modern-evil-paredit-change-line
   (beg end type register yank-handler)
-  "Change to end of line respecting parenthesis."
+  "Yank line from BEG to END of TYPE into REGISTER."
   :motion evil-end-of-line
   (interactive "<R><x><y>")
   (let* ((beg (point))
@@ -169,7 +175,9 @@ of the block."
 
 (evil-define-operator modern-evil-paredit-backward-delete
   (beg end type register yank-handler)
-  "Delete character beforepoint."
+  "Delete character forward.
+Delete the character forward from BEG to END of TYPE into REGISTER with
+YANK-HANDLER."
   :motion evil-backward-char
   :keep-visual t
   (interactive "<r><x><y>")
@@ -190,15 +198,15 @@ of the block."
      (point) (1+ (point)) type register yank-handler)))
 
 (evil-define-key 'normal modern-evil-paredit-mode-map
-  (kbd "d") 'modern-evil-paredit-delete
-  (kbd "c") 'modern-evil-paredit-change
-  (kbd "y") 'modern-evil-paredit-yank
-  (kbd "D") 'modern-evil-paredit-delete-line
-  (kbd "C") 'modern-evil-paredit-change-line
-  (kbd "S") 'modern-evil-paredit-change-whole-line
-  (kbd "Y") 'modern-evil-paredit-yank-line
-  (kbd "X") 'modern-evil-paredit-backward-delete
-  (kbd "x") 'modern-evil-paredit-forward-delete)
+  (kbd "d") #'modern-evil-paredit-delete
+  (kbd "c") #'modern-evil-paredit-change
+  (kbd "y") #'modern-evil-paredit-yank
+  (kbd "D") #'modern-evil-paredit-delete-line
+  (kbd "C") #'modern-evil-paredit-change-line
+  (kbd "S") #'modern-evil-paredit-change-whole-line
+  (kbd "Y") #'modern-evil-paredit-yank-line
+  (kbd "X") #'modern-evil-paredit-backward-delete
+  (kbd "x") #'modern-evil-paredit-forward-delete)
 
 (provide 'modern-evil-paredit)
 
