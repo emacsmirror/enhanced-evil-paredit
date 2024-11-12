@@ -1,4 +1,4 @@
-;;; evil-paredit.el --- Paredit support for evil keybindings
+;;; evil-paredit.el --- Paredit support for evil keybindings  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2012 Roman Gonzalez
 ;;
@@ -14,7 +14,7 @@
 
 ;; URL: https://github.com/roman/evil-paredit
 
-;; Package-Requires: ((evil "1.0.9") (paredit "25beta"))
+;; Package-Requires: ((emacs "24.1") (evil "1.0.9") (paredit "25beta"))
 
 ;;; Code:
 
