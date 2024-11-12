@@ -19,7 +19,9 @@ To install `modern-evil-paredit` using `straight.el`:
   :straight (modern-evil-paredit
              :type git
              :host github
-             :repo "jamescherti/modern-evil-paredit.el"))
+             :repo "jamescherti/modern-evil-paredit.el")
+  :hook
+  (paredit-mode . modern-evil-paredit-mode))
 ```
 
 ## Author and License
