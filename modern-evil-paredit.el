@@ -1,21 +1,35 @@
 ;;; modern-evil-paredit.el --- Paredit support for evil keybindings  -*- lexical-binding: t; -*-
 ;;
-;; Copyright (C) 2024 James Cherti
+;; Copyright (C) 2024 James Cherti | https://www.jamescherti.com/contact/
 ;; Copyright (C) 2012 Roman Gonzalez
-;;
-;; Author: Roman Gonzalez <romanandreg@gmail.com>
-;; Mantainer: Roman Gonzalez <romanandreg@gmail.com>
-;; Keywords: paredit, evil
-;;
-;; This file is NOT part of GNU Emacs.
-;;
-;; This file is free software (MIT License)
 
+;; Mantainer: James Cherti
+;; Original author: Roman Gonzalez <romanandreg@gmail.com>
 ;; Version: 0.0.2
-
 ;; URL: https://github.com/jamescherti/modern-evil-paredit.el
-
+;; Keywords: convenience
 ;; Package-Requires: ((emacs "24.1") (evil "1.0.9") (paredit "25beta"))
+;; SPDX-License-Identifier: GPL-3.0-or-later
+
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 2, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;; This package prevents parenthesis imbalance when using evil-mode with
+;; paredit. It intercepts evil-mode modifier commands (such as delete, change,
+;; and yank) and blocks their execution if they would break parenthetical
+;; structure. This ensures your Lisp code maintains proper syntax while
+;; preserving evil-mode's powerful editing capabilities.
 
 ;;; Code:
 
@@ -24,13 +38,14 @@
 
 ;;;###autoload
 (define-minor-mode modern-evil-paredit-mode
-  "Minor mode for setting up Evil with paredit in a single buffer"
+  "Minor mode for setting up Evil with paredit in a single buffer."
   :keymap '()
   (let ((prev-state evil-state))
     (evil-normal-state)
     (evil-change-state prev-state)))
 
 (defun modern-evil-paredit-check-region (beg end)
+  "Check region from BEG to END."
   (if (fboundp 'paredit-check-region-state)
       (if (and beg end)
           ;; Check that region begins and ends in a sufficiently similar
@@ -43,7 +58,7 @@
     (paredit-check-region-for-delete beg end)))
 
 (evil-define-operator modern-evil-paredit-yank (beg end type register yank-handler)
-  "Saves the characters in motion into the kill-ring."
+  "Saves the characters in motion into the `kill-ring'."
   :move-point nil
   :repeat nil
   (interactive "<R><x><y>")
@@ -57,7 +72,7 @@
     (evil-yank-characters beg end register yank-handler))))
 
 (evil-define-operator modern-evil-paredit-yank-line (beg end type register)
-  "Saves whole lines into the kill-ring."
+  "Saves whole lines into the `kill-ring'."
   :motion evil-line
   :move-point nil
   (interactive "<R><x>")
@@ -68,7 +83,7 @@
 (evil-define-operator modern-evil-paredit-delete
   (beg end type register yank-handler)
   "Delete text from BEG to END with TYPE respecting parenthesis.
-Save in REGISTER or in the kill-ring with YANK-HANDLER."
+Save in REGISTER or in the `kill-ring' with YANK-HANDLER."
   (interactive "<R><x><y>")
   (modern-evil-paredit-yank beg end type register yank-handler)
   (if (eq type 'block)
@@ -91,34 +106,34 @@ Save in REGISTER or in the kill-ring with YANK-HANDLER."
                          type register yank-handler)))
 
 (defun modern-evil-paredit-kill-end ()
-  "Returns the position where paredit-kill would kill to"
+  "Return the position where `paredit-kill' would kill to."
   (when (paredit-in-char-p)             ; Move past the \ and prefix.
     (backward-char 2))                  ; (# in Scheme/CL, ? in elisp)
-  (let* ((eol (point-at-eol))
+  (let* ((eol (line-end-position))
          (end-of-list-p (save-excursion
                           (paredit-forward-sexps-to-kill (point) eol))))
     (if end-of-list-p (progn (up-list) (backward-char)))
     (cond ((paredit-in-string-p)
-           (if (save-excursion (paredit-skip-whitespace t (point-at-eol))
+           (if (save-excursion (paredit-skip-whitespace t (line-end-position))
                                (eolp))
                (kill-line)
              (save-excursion
                ;; Be careful not to split an escape sequence.
                (if (paredit-in-string-escape-p)
                    (backward-char))
-               (min (point-at-eol)
+               (min (line-end-position)
                     (cdr (paredit-string-start+end-points))))))
           ((paredit-in-comment-p)
            eol)
           (t (if (and (not end-of-list-p)
-                      (eq (point-at-eol) eol))
+                      (eq (line-end-position) eol))
                  eol
                (point))))))
 
 (evil-define-operator modern-evil-paredit-change
   (beg end type register yank-handler delete-func)
   "Change text from BEG to END with TYPE respecting parenthesis.
-Save in REGISTER or the kill-ring with YANK-HANDLER.
+Save in REGISTER or the `kill-ring' with YANK-HANDLER.
 DELETE-FUNC is a function for deleting text, default `evil-delete'.
 If TYPE is `line', insertion starts on an empty line.
 If TYPE is `block', the inserted text in inserted at each line
