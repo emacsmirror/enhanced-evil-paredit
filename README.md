@@ -1,4 +1,4 @@
-# evil-paredit
+# modern-evil-paredit
 
 This package helps you to not screw up your paredit setup when using evil-mode.
 
@@ -13,5 +13,5 @@ Install via [el-get](https://github.com/dimitri/el-get/)
 ## Setup
 
 ```elisp
-(add-hook 'emacs-lisp-mode-hook 'evil-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'modern-evil-paredit-mode)
 ```
