@@ -167,6 +167,28 @@ of the block."
   (modern-evil-paredit-change-line nil nil)
   (indent-according-to-mode))
 
+(evil-define-operator modern-evil-paredit-backward-delete
+  (beg end type register yank-handler)
+  "Delete character beforepoint."
+  :motion evil-backward-char
+  :keep-visual t
+  (interactive "<r><x><y>")
+  (if (and beg end)
+      (modern-evil-paredit-delete beg end type register yank-handler)
+    (modern-evil-paredit-delete
+     (1- (point)) (point) type register yank-handler)))
+
+(evil-define-operator modern-evil-paredit-forward-delete
+  (beg end type register yank-handler)
+  "Delete character at point."
+  :motion evil-forward-char
+  :keep-visual t
+  (interactive "<r><x><y>")
+  (if (and beg end)
+      (modern-evil-paredit-delete beg end type register yank-handler)
+    (modern-evil-paredit-delete
+     (point) (1+ (point)) type register yank-handler)))
+
 (evil-define-key 'normal modern-evil-paredit-mode-map
   (kbd "d") 'modern-evil-paredit-delete
   (kbd "c") 'modern-evil-paredit-change
@@ -175,8 +197,8 @@ of the block."
   (kbd "C") 'modern-evil-paredit-change-line
   (kbd "S") 'modern-evil-paredit-change-whole-line
   (kbd "Y") 'modern-evil-paredit-yank-line
-  (kbd "X") 'paredit-backward-delete
-  (kbd "x") 'paredit-forward-delete)
+  (kbd "X") 'modern-evil-paredit-backward-delete
+  (kbd "x") 'modern-evil-paredit-forward-delete)
 
 (provide 'modern-evil-paredit)
 
