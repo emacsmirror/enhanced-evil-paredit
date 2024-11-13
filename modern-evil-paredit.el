@@ -1,7 +1,7 @@
 ;;; modern-evil-paredit.el --- Paredit support for evil keybindings  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2024 James Cherti | https://www.jamescherti.com/contact/
-;; Copyright (C) 2012 Roman Gonzalez
+;; Copyright (C) 2012-2015 Roman Gonzalez
 
 ;; Mantainer: James Cherti
 ;; Original author: Roman Gonzalez <romanandreg@gmail.com>
