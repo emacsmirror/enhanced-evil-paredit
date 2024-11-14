@@ -7,9 +7,9 @@ This package prevents parenthesis imbalance when using evil-mode with paredit. I
 
 ## Installation
 
-### Install using straight
+### Install with straight
 
-To install `modern-evil-paredit` using `straight.el`:
+To install `modern-evil-paredit` with `straight.el`:
 
 1. It if hasn't already been done, [add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to your init file.
 2. Add the following code to the Emacs init file:
