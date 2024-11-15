@@ -24,6 +24,24 @@ To install `modern-evil-paredit` with `straight.el`:
   (paredit-mode . modern-evil-paredit-mode))
 ```
 
+## Frequently asked questions
+
+### What are the differences between modern-evil-paredit and evil-paredit?
+
+The `modern-evil-paredit` package is a modernized version of `evil-paredit`. It has been enhanced and fully functions in recent versions of Emacs. The author decided to develop `modern-evil-paredit` because the `evil-paredit` package is no longer maintained and does not function in recent versions of Emacs and Evil.
+
+Here are the enhancements in `modern-evil-paredit`:
+* Add lexical binding with `lexical-binding: t`.
+* Fix call to a non-existent function `(evil-called-interactively-p)`, which has been replaced by `(called-interactively-p 'any)`.
+* Suppress Emacs Lisp warnings and add Melpa tests.
+* Refactor and improve `modern-evil-paredit`.
+* Add new functions: `modern-evil-paredit-backward-delete` and `modern-evil-paredit-forward-delete`.
+* Create a `modern-evil-paredit` customization group for user configuration.
+* Remove Evil state change from `modern-evil-paredit-mode`.
+* Improve error handling in `modern-evil-paredit-check-region`.
+* Enhance docstrings.
+* Remove keymap bindings that are reserved by Emacs.
+
 ## Author and License
 
 The `modern-evil-paredit` Emacs package has been written by [James Cherti](https://www.jamescherti.com/), Roman Gonzalez, and is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
