@@ -63,53 +63,75 @@ Signals an error if deleting the region would break structure."
             (paredit-check-region-state state state*)))
       (paredit-check-region-for-delete beg end))))
 
-(evil-define-operator modern-evil-paredit-yank (beg end type register yank-handler)
+(evil-define-operator modern-evil-paredit-yank
+  (beg end &optional type register yank-handler)
   "Yank text from BEG to END of TYPE into REGISTER with YANK-HANDLER."
   :move-point nil
   :repeat nil
   (interactive "<R><x><y>")
-  (modern-evil-paredit--check-region beg end)
   (cond
-   ((eq type 'block)
-    (evil-yank-rectangle beg end register yank-handler))
-   ((eq type 'line)
-    (evil-yank-lines beg end register yank-handler))
-   (t
-    (evil-yank-characters beg end register yank-handler))))
+   ((bound-and-true-p paredit-mode)
+    (modern-evil-paredit--check-region beg end)
+    (cond
+     ((eq type 'block)
+      (evil-yank-rectangle beg end register yank-handler))
+     ((eq type 'line)
+      (evil-yank-lines beg end register yank-handler))
+     (t
+      (evil-yank-characters beg end register yank-handler))))
 
-(evil-define-operator modern-evil-paredit-yank-line (beg end type register)
+   (t
+    (evil-yank beg end type register yank-handler))))
+
+(evil-define-operator modern-evil-paredit-yank-line
+  (beg end &optional type register)
   "Saves whole lines into the `kill-ring'."
   :motion evil-line
   :move-point nil
   (interactive "<R><x>")
-  (let* ((beg (point))
-         (end (modern-evil-paredit-kill-end)))
-    (modern-evil-paredit-yank beg end type register)))
+  (cond
+   ((bound-and-true-p paredit-mode)
+    (let* ((beg (point))
+           (end (modern-evil-paredit-kill-end)))
+      (modern-evil-paredit-yank beg end type register)))
+
+   (t
+    (evil-yank-line beg end type register))))
 
 (evil-define-operator modern-evil-paredit-delete
-  (beg end type register yank-handler)
+  (beg end &optional type register yank-handler)
   "Delete text from BEG to END with TYPE respecting parenthesis.
 Save in REGISTER or in the `kill-ring' with YANK-HANDLER."
   (interactive "<R><x><y>")
-  (modern-evil-paredit-yank beg end type register yank-handler)
-  (if (eq type 'block)
-      (evil-apply-on-block #'delete-region beg end nil)
-    (delete-region beg end))
-  ;; place cursor on beginning of line
-  (when (and (called-interactively-p 'any)
-             (eq type 'line))
-    (evil-first-non-blank)))
+  (cond
+   ((bound-and-true-p paredit-mode)
+    (modern-evil-paredit-yank beg end type register yank-handler)
+    (if (eq type 'block)
+        (evil-apply-on-block #'delete-region beg end nil)
+      (delete-region beg end))
+    ;; Place cursor on beginning of line
+    (when (and (called-interactively-p 'any)
+               (eq type 'line))
+      (evil-first-non-blank)))
+
+   (t
+    (evil-delete beg end type register yank-handler))))
 
 (evil-define-operator modern-evil-paredit-delete-line
-  (beg end type register yank-handler)
+  (beg end &optional type register yank-handler)
   "Delete to end of line respecting parenthesis."
   :motion nil
   :keep-visual t
   (interactive "<R><x>")
-  (let* ((beg (point))
-         (end (modern-evil-paredit-kill-end)))
-    (modern-evil-paredit-delete beg end
-                         type register yank-handler)))
+  (cond
+   ((bound-and-true-p paredit-mode)
+    (let* ((beg (point))
+           (end (modern-evil-paredit-kill-end)))
+      (modern-evil-paredit-delete beg end
+                                  type register yank-handler)))
+
+   (t
+    (evil-delete-line beg end type register yank-handler))))
 
 (defun modern-evil-paredit-kill-end ()
   "Return the position where `paredit-kill' would kill to."

@@ -31,6 +31,7 @@ To install `modern-evil-paredit` with `straight.el`:
 The `modern-evil-paredit` package is a modernized version of `evil-paredit`. It has been enhanced and fully functions in recent versions of Emacs. The author decided to develop `modern-evil-paredit` because the `evil-paredit` package is no longer maintained and does not function in recent versions of Emacs and Evil.
 
 Here are the enhancements in `modern-evil-paredit`:
+* `modern-evil-paredit-mode` only uses the paredit functions when paredit is enabled. Otherwise, `modern-evil-paredit-mode` uses Evil functions.
 * Add lexical binding with `lexical-binding: t`.
 * Fix call to a non-existent function `(evil-called-interactively-p)`, which has been replaced by `(called-interactively-p 'any)`.
 * Suppress Emacs Lisp warnings and add Melpa tests.
@@ -41,6 +42,7 @@ Here are the enhancements in `modern-evil-paredit`:
 * Improve error handling in `modern-evil-paredit-check-region`.
 * Enhance docstrings.
 * Remove keymap bindings that are reserved by Emacs.
+* Add `&optional` after the `end` argument to make it similar to Evil functions.
 
 ## Author and License
 
@@ -64,7 +66,7 @@ Other Emacs packages by the same author:
 - [Ultyas](https://github.com/jamescherti/ultyas/): A command-line tool designed to simplify the process of converting code snippets from UltiSnips to YASnippet format.
 - [dir-config.el](https://github.com/jamescherti/dir-config.el): Automatically find and evaluate .dir-config.el Elisp files to configure directory-specific settings.
 - [flymake-bashate.el](https://github.com/jamescherti/flymake-bashate.el): A package that provides a Flymake backend for the bashate Bash script style checker.
-- [flymake-ansible-lint.el](https://github.com/jamescherti/flymake-ansible-lint.el): An Emacs package that offers a Flymake backend for ansible-lint.
-- [compile-angel.el](https://github.com/jamescherti/compile-angel.el): An Emacs package that automatically compiles Emacs loaded or saved Elisp libraries. This lightweight alternative to auto-compile not only compiles Elisp files loaded with load and require, but also handles deferred and autoloaded files.
-- [inhibit-mouse.el](https://github.com/jamescherti/inhibit-mouse.el): A package that disables mouse input in Emacs, offering a simpler and faster alternative to the disable-mouse package.
+- [flymake-ansible-lint.el](https://github.com/jamescherti/flymake-ansible-lint.el): An Emacs package that offers a Flymake backend for `ansible-lint`.
+- [compile-angel.el](https://github.com/jamescherti/compile-angel.el): An Emacs package that automatically compiles Emacs loaded or saved Elisp libraries. This lightweight alternative to `auto-compile` not only compiles Elisp files loaded with `load` and `require`, but also handles deferred and autoloaded files.
+- [inhibit-mouse.el](https://github.com/jamescherti/inhibit-mouse.el): A package that disables mouse input in Emacs, offering a simpler and faster alternative to the `disable-mouse` package.
 - [quick-sdcv.el](https://github.com/jamescherti/quick-sdcv.el): This package enables Emacs to function as an offline dictionary by using the sdcv command-line tool directly within Emacs.
