@@ -31,6 +31,7 @@ To install `modern-evil-paredit` with `straight.el`:
 The `modern-evil-paredit` package is a modernized version of `evil-paredit`. It has been enhanced and fully functions in recent versions of Emacs. The author decided to develop `modern-evil-paredit` because the `evil-paredit` package is no longer maintained and does not function in recent versions of Emacs and Evil.
 
 Here are the enhancements in `modern-evil-paredit`:
+* Handles paste using `p` and `P`, ensuring that the pasted text has balanced parentheses.
 * `modern-evil-paredit-mode` only uses the paredit functions when paredit is enabled. Otherwise, `modern-evil-paredit-mode` uses Evil functions.
 * Add lexical binding with `lexical-binding: t`.
 * Fix call to a non-existent function `(evil-called-interactively-p)`, which has been replaced by `(called-interactively-p 'any)`.

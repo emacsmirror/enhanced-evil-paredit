@@ -219,7 +219,56 @@ YANK-HANDLER."
     (modern-evil-paredit-delete
      (point) (1+ (point)) type register yank-handler)))
 
+(evil-define-command modern-evil-paredit--paste-funcall
+  (paste-func count &optional register yank-handler)
+  "Paste the latest yanked text using PASTE-FUNC function.
+COUNT, REGISTER, and YANK-HANDLER are the same arguments as `evil-paste-after'
+and `evil-paste-before'.
+The return value is the yanked text."
+  (cond
+   ((not (bound-and-true-p paredit-mode))
+    (funcall paste-func count register yank-handler))
+
+   (t (let ((undo-handle (prepare-change-group))
+            (point (point)))
+        (unwind-protect
+            (progn
+              (funcall paste-func count register yank-handler)
+              (let ((beg (progn (evil-goto-mark ?\[) (point)))
+                    (end (progn (evil-goto-mark ?\]) (+ 1 (point)))))
+                (let ((error t))
+                  (unwind-protect
+                      (progn
+                        (modern-evil-paredit--check-region beg end)
+                        (setq error nil))
+                    (when error
+                      (evil-delete beg end nil ?_)
+                      (goto-char point))))))
+          (undo-amalgamate-change-group undo-handle))))))
+
+(evil-define-command modern-evil-paredit-paste-after
+  (count &optional register yank-handler)
+  "Paste the latest yanked text behind point.
+COUNT, REGISTER, and YANK-HANDLER are the same arguments as `evil-paste-after'
+and `evil-paste-before'.
+The return value is the yanked text."
+  :suppress-operator t
+  (interactive "*P<x>")
+  (modern-evil-paredit--paste-funcall #'evil-paste-after count register yank-handler))
+
+(evil-define-command modern-evil-paredit-paste-before
+  (count &optional register yank-handler)
+  "Paste the latest yanked text before the cursor position.
+COUNT, REGISTER, and YANK-HANDLER are the same arguments as `evil-paste-after'
+and `evil-paste-before'.
+The return value is the yanked text."
+  :suppress-operator t
+  (interactive "*P<x>")
+  (modern-evil-paredit--paste-funcall #'evil-paste-before count register yank-handler))
+
 (evil-define-key 'normal modern-evil-paredit-mode-map
+  (kbd "P") #'modern-evil-paredit-paste-before
+  (kbd "p") #'modern-evil-paredit-paste-after
   (kbd "d") #'modern-evil-paredit-delete
   (kbd "c") #'modern-evil-paredit-change
   (kbd "y") #'modern-evil-paredit-yank
