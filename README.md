@@ -1,9 +1,9 @@
-# modern-evil-paredit.el
+# modern-evil-paredit.el - Prevent Parenthesis Imbalance when Using Evil-mode with Paredit
 ![Build Status](https://github.com/jamescherti/modern-evil-paredit.el/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/github/license/jamescherti/modern-evil-paredit.el)
 ![](https://raw.githubusercontent.com/jamescherti/modern-evil-paredit.el/main/.images/made-for-gnu-emacs.svg)
 
-This package prevents parenthesis imbalance when using evil-mode with paredit. It intercepts evil-mode modifier commands (such as delete, change, and yank) and blocks their execution if they would break parenthetical structure. This ensures your Lisp code maintains proper syntax while preserving evil-mode's powerful editing capabilities.
+The **modern-evil-paredit** package prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* modifier commands (such as delete, change, paste, and yank) and blocks their execution if they would break parenthetical structure. This ensures your Lisp code maintains proper syntax while preserving evil-mode's powerful editing capabilities.
 
 ## Installation
 
@@ -28,16 +28,16 @@ To install `modern-evil-paredit` with `straight.el`:
 
 ### What are the differences between modern-evil-paredit and evil-paredit?
 
-The `modern-evil-paredit` package is a modernized version of `evil-paredit`. It has been enhanced and fully functions in recent versions of Emacs. The author decided to develop `modern-evil-paredit` because the `evil-paredit` package is no longer maintained and does not function in recent versions of Emacs and Evil.
+The `modern-evil-paredit` package is a modernized version of `evil-paredit`. It has been enhanced and fully functions in recent versions of Emacs (Emacs >= 28). The author decided to develop `modern-evil-paredit` because the `evil-paredit` package is no longer maintained and does not function in recent versions of Emacs and Evil.
 
 Here are the enhancements in `modern-evil-paredit`:
 * Handles paste using `p` and `P`, ensuring that the pasted text has balanced parentheses.
+* Fix call to a non-existent function `(evil-called-interactively-p)`, which has been replaced by `(called-interactively-p 'any)`.
+* Add new functions: `modern-evil-paredit-backward-delete` and `modern-evil-paredit-forward-delete`.
 * `modern-evil-paredit-mode` only uses the paredit functions when paredit is enabled. Otherwise, `modern-evil-paredit-mode` uses Evil functions.
 * Add lexical binding with `lexical-binding: t`.
-* Fix call to a non-existent function `(evil-called-interactively-p)`, which has been replaced by `(called-interactively-p 'any)`.
 * Suppress Emacs Lisp warnings and add Melpa tests.
 * Refactor and improve `modern-evil-paredit`.
-* Add new functions: `modern-evil-paredit-backward-delete` and `modern-evil-paredit-forward-delete`.
 * Create a `modern-evil-paredit` customization group for user configuration.
 * Remove Evil state change from `modern-evil-paredit-mode`.
 * Improve error handling in `modern-evil-paredit-check-region`.
