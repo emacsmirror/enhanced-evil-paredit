@@ -25,11 +25,11 @@
 ;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; This package prevents parenthesis imbalance when using evil-mode with
-;; paredit. It intercepts evil-mode modifier commands (such as delete, change,
-;; and yank) and blocks their execution if they would break parenthetical
-;; structure. This ensures your Lisp code maintains proper syntax while
-;; preserving evil-mode's powerful editing capabilities.
+;; The **enhanced-evil-paredit** package prevents parenthesis imbalance when
+;; using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as
+;; delete, change, and paste, blocking their execution if they would break the
+;; parenthetical structure. This guarantees that your Lisp code remains
+;; syntactically correct while retaining the editing features of *evil-mode*.
 
 ;;; Code:
 

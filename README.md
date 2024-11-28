@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/github/license/jamescherti/enhanced-evil-paredit.el)
 ![](https://raw.githubusercontent.com/jamescherti/enhanced-evil-paredit.el/main/.images/made-for-gnu-emacs.svg)
 
-The **enhanced-evil-paredit** package prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* modifier commands (such as delete, change, paste, and yank) and blocks their execution if they would break parenthetical structure. This ensures your Lisp code maintains proper syntax while preserving evil-mode's powerful editing capabilities.
+The **enhanced-evil-paredit** package prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking their execution if they would break the parenthetical structure. This guarantees that your Lisp code remains syntactically correct while retaining the editing features of *evil-mode*.
 
 ## Installation
 
