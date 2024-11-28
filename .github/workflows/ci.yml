@@ -1,7 +1,7 @@
 ---
 #
 # Copyright (C) 2024 James Cherti | https://www.jamescherti.com/contact/
-# URL: https://github.com/jamescherti/modern-evil-paredit.el
+# URL: https://github.com/jamescherti/enhanced-evil-paredit.el
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ jobs:
 
       - name: Run melpazoid
         env:
-          RECIPE: (modern-evil-paredit :repo "jamescherti/modern-evil-paredit.el" :branch "${{ github.ref_name }}" :fetcher github :files ("modern-evil-paredit.el"))
+          RECIPE: (enhanced-evil-paredit :repo "jamescherti/enhanced-evil-paredit.el" :branch "${{ github.ref_name }}" :fetcher github :files ("enhanced-evil-paredit.el"))
           EXIST_OK: false
           CASK_PATH: $HOME/.cask/bin
         run: 'echo -e "Ref: $GITHUB_REF\n$(emacs --version)" && make -C ~/melpazoid'

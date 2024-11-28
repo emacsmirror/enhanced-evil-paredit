@@ -1,4 +1,4 @@
 (source gnu)
 (source melpa)
 
-(package-file "modern-evil-paredit.el")
+(package-file "enhanced-evil-paredit.el")

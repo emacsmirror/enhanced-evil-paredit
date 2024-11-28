@@ -1,53 +1,53 @@
-# modern-evil-paredit.el - Prevent Parenthesis Imbalance when Using Evil-mode with Paredit
-![Build Status](https://github.com/jamescherti/modern-evil-paredit.el/actions/workflows/ci.yml/badge.svg)
-![License](https://img.shields.io/github/license/jamescherti/modern-evil-paredit.el)
-![](https://raw.githubusercontent.com/jamescherti/modern-evil-paredit.el/main/.images/made-for-gnu-emacs.svg)
+# enhanced-evil-paredit.el - Prevent Parenthesis Imbalance when Using Evil-mode with Paredit
+![Build Status](https://github.com/jamescherti/enhanced-evil-paredit.el/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/github/license/jamescherti/enhanced-evil-paredit.el)
+![](https://raw.githubusercontent.com/jamescherti/enhanced-evil-paredit.el/main/.images/made-for-gnu-emacs.svg)
 
-The **modern-evil-paredit** package prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* modifier commands (such as delete, change, paste, and yank) and blocks their execution if they would break parenthetical structure. This ensures your Lisp code maintains proper syntax while preserving evil-mode's powerful editing capabilities.
+The **enhanced-evil-paredit** package prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* modifier commands (such as delete, change, paste, and yank) and blocks their execution if they would break parenthetical structure. This ensures your Lisp code maintains proper syntax while preserving evil-mode's powerful editing capabilities.
 
 ## Installation
 
 ### Install with straight
 
-To install `modern-evil-paredit` with `straight.el`:
+To install `enhanced-evil-paredit` with `straight.el`:
 
 1. It if hasn't already been done, [add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to your init file.
 2. Add the following code to the Emacs init file:
 ```emacs-lisp
-(use-package modern-evil-paredit
+(use-package enhanced-evil-paredit
   :ensure t
-  :straight (modern-evil-paredit
+  :straight (enhanced-evil-paredit
              :type git
              :host github
-             :repo "jamescherti/modern-evil-paredit.el")
+             :repo "jamescherti/enhanced-evil-paredit.el")
   :hook
-  (paredit-mode . modern-evil-paredit-mode))
+  (paredit-mode . enhanced-evil-paredit-mode))
 ```
 
 ## Frequently asked questions
 
-### What are the differences between modern-evil-paredit and evil-paredit?
+### What are the differences between enhanced-evil-paredit and evil-paredit?
 
-The `modern-evil-paredit` package is a modernized version of `evil-paredit`. It has been enhanced and fully functions in recent versions of Emacs (Emacs >= 28). The author decided to develop `modern-evil-paredit` because the `evil-paredit` package is no longer maintained and does not function in recent versions of Emacs and Evil.
+The `enhanced-evil-paredit` package is a modernized version of `evil-paredit`. It has been enhanced and fully functions in recent versions of Emacs (Emacs >= 28). The author decided to develop `enhanced-evil-paredit` because the `evil-paredit` package is no longer maintained and does not function in recent versions of Emacs and Evil.
 
-Here are the enhancements in `modern-evil-paredit`:
+Here are the enhancements in `enhanced-evil-paredit`:
 * Handles paste using `p` and `P`, ensuring that the pasted text has balanced parentheses.
 * Fix call to a non-existent function `(evil-called-interactively-p)`, which has been replaced by `(called-interactively-p 'any)`.
-* Add new functions: `modern-evil-paredit-backward-delete` and `modern-evil-paredit-forward-delete`.
-* `modern-evil-paredit-mode` only uses the paredit functions when paredit is enabled. Otherwise, `modern-evil-paredit-mode` uses Evil functions.
+* Add new functions: `enhanced-evil-paredit-backward-delete` and `enhanced-evil-paredit-forward-delete`.
+* `enhanced-evil-paredit-mode` only uses the paredit functions when paredit is enabled. Otherwise, `enhanced-evil-paredit-mode` uses Evil functions.
 * Add lexical binding with `lexical-binding: t`.
 * Suppress Emacs Lisp warnings and add Melpa tests.
-* Refactor and improve `modern-evil-paredit`.
-* Create a `modern-evil-paredit` customization group for user configuration.
-* Remove Evil state change from `modern-evil-paredit-mode`.
-* Improve error handling in `modern-evil-paredit-check-region`.
+* Refactor and improve `enhanced-evil-paredit`.
+* Create a `enhanced-evil-paredit` customization group for user configuration.
+* Remove Evil state change from `enhanced-evil-paredit-mode`.
+* Improve error handling in `enhanced-evil-paredit-check-region`.
 * Enhance docstrings.
 * Remove keymap bindings that are reserved by Emacs.
 * Add `&optional` after the `end` argument to make it similar to Evil functions.
 
 ## Author and License
 
-The `modern-evil-paredit` Emacs package has been written by [James Cherti](https://www.jamescherti.com/), Roman Gonzalez, and is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
+The `enhanced-evil-paredit` Emacs package has been written by [James Cherti](https://www.jamescherti.com/), Roman Gonzalez, and is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
 
 Copyright (C) 2024 James Cherti
 Copyright (C) 2012-2015 Roman Gonzalez
@@ -56,7 +56,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 ## Links
 
-- [modern-evil-paredit.el @GitHub](https://github.com/jamescherti/modern-evil-paredit.el)
+- [enhanced-evil-paredit.el @GitHub](https://github.com/jamescherti/enhanced-evil-paredit.el)
 
 Other Emacs packages by the same author:
 - [minimal-emacs.d](https://github.com/jamescherti/minimal-emacs.d): This repository hosts a minimal Emacs configuration designed to serve as a foundation for your vanilla Emacs setup and provide a solid base for an enhanced Emacs experience.

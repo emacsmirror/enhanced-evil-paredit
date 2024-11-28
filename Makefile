@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2024 James Cherti | https://www.jamescherti.com/contact/
-# URL: https://github.com/jamescherti/modern-evil-paredit.el
+# URL: https://github.com/jamescherti/enhanced-evil-paredit.el
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,4 +35,4 @@ compile: cask
 
 .PHONY: test
 test: compile
-	cask emacs --batch -L . -L tests -l tests/test-modern-evil-paredit.el -f test-modern-evil-paredit
+	cask emacs --batch -L . -L tests -l tests/test-enhanced-evil-paredit.el -f test-enhanced-evil-paredit
