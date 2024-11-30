@@ -41,6 +41,12 @@
   :group 'enhanced-evil-paredit
   :prefix "enhanced-evil-paredit-")
 
+(defcustom enhanced-evil-paredit-handle-paste nil
+  "Non-nil to prevent parenthesis imbalance when pressing p or P in normal mode.
+This is an experimental feature."
+  :type 'boolean
+  :group 'group)
+
 (defvar enhanced-evil-paredit-mode-map (make-sparse-keymap)
   "Keymap for `enhanced-evil-paredit-mode'.")
 
@@ -226,7 +232,8 @@ COUNT, REGISTER, and YANK-HANDLER are the same arguments as `evil-paste-after'
 and `evil-paste-before'.
 The return value is the yanked text."
   (cond
-   ((not (bound-and-true-p paredit-mode))
+   ((or (not enhanced-evil-paredit-handle-paste)
+        (not (bound-and-true-p paredit-mode)))
     (funcall paste-func count register yank-handler))
 
    (t (let ((undo-handle (prepare-change-group))
