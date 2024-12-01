@@ -14,6 +14,10 @@ To install *enhanced-evil-paredit* from MELPA:
 2. Add the following code to the Emacs init file to install *enhanced-evil-paredit*:
 ```emacs-lisp
 (use-package enhanced-evil-paredit
+(use-package enhanced-evil-paredit
+  :ensure t
+  :config
+  (add-hook 'paredit-mode-hook #'enhanced-evil-paredit-mode))
   :ensure t
   :config
   (add-hook 'paredit-mode-hook #'enhanced-evil-paredit-mode))
@@ -68,3 +72,7 @@ Other Emacs packages by the same author:
 - [flymake-ansible-lint.el](https://github.com/jamescherti/flymake-ansible-lint.el): An Emacs package that offers a Flymake backend for `ansible-lint`.
 - [inhibit-mouse.el](https://github.com/jamescherti/inhibit-mouse.el): A package that disables mouse input in Emacs, offering a simpler and faster alternative to the `disable-mouse` package.
 - [quick-sdcv.el](https://github.com/jamescherti/quick-sdcv.el): This package enables Emacs to function as an offline dictionary by using the sdcv command-line tool directly within Emacs.
+- [enhanced-evil-paredit.el](https://github.com/jamescherti/enhanced-evil-paredit.el): An Emacs package that prevents parenthesis imbalance when
+using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as
+delete, change, and paste, blocking their execution if they would break the
+parenthetical structure.
