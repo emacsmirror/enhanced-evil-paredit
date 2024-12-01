@@ -1,4 +1,5 @@
 # enhanced-evil-paredit.el - Prevent Parenthesis Imbalance when Using Evil-mode with Paredit
+[![MELPA](https://melpa.org/packages/enhanced-evil-paredit-badge.svg)](https://melpa.org/#/enhanced-evil-paredit)
 ![Build Status](https://github.com/jamescherti/enhanced-evil-paredit.el/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/github/license/jamescherti/enhanced-evil-paredit.el)
 ![](https://raw.githubusercontent.com/jamescherti/enhanced-evil-paredit.el/main/.images/made-for-gnu-emacs.svg)
@@ -7,19 +8,15 @@ The **enhanced-evil-paredit** package prevents parenthesis imbalance when using 
 
 ## Installation
 
-### Install with straight
+### Install from MELPA
 
-To install `enhanced-evil-paredit` with `straight.el`:
+To install `enhanced-evil-paredit` from MELPA:
 
-1. It if hasn't already been done, [add the straight.el bootstrap code](https://github.com/radian-software/straight.el?tab=readme-ov-file#getting-started) to your init file.
+1. If you haven't already done so, [add MELPA repository to your Emacs configuration](https://melpa.org/#/getting-started).
 2. Add the following code to the Emacs init file:
 ```emacs-lisp
 (use-package enhanced-evil-paredit
   :ensure t
-  :straight (enhanced-evil-paredit
-             :type git
-             :host github
-             :repo "jamescherti/enhanced-evil-paredit.el")
   :hook
   (paredit-mode . enhanced-evil-paredit-mode))
 ```
