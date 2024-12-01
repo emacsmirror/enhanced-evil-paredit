@@ -14,10 +14,6 @@ To install *enhanced-evil-paredit* from MELPA:
 2. Add the following code to the Emacs init file to install *enhanced-evil-paredit*:
 ```emacs-lisp
 (use-package enhanced-evil-paredit
-(use-package enhanced-evil-paredit
-  :ensure t
-  :config
-  (add-hook 'paredit-mode-hook #'enhanced-evil-paredit-mode))
   :ensure t
   :config
   (add-hook 'paredit-mode-hook #'enhanced-evil-paredit-mode))
