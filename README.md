@@ -8,8 +8,10 @@ The **enhanced-evil-paredit** package prevents parenthesis imbalance when using 
 
 ## Installation
 
+To install *enhanced-evil-paredit* from MELPA:
+
 1. If you haven't already done so, [add MELPA repository to your Emacs configuration](https://melpa.org/#/getting-started).
-2. Add the following code to the Emacs init file:
+2. Add the following code to the Emacs init file to install *enhanced-evil-paredit*:
 ```emacs-lisp
 (use-package enhanced-evil-paredit
   :ensure t
