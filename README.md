@@ -39,6 +39,7 @@ Here are the enhancements in `enhanced-evil-paredit`:
 * Enhance docstrings.
 * Remove keymap bindings that are reserved by Emacs.
 * Add `&optional` after the `end` argument to make it similar to Evil functions.
+- `dd` restores the column when there is a parentheses mismatch.
 
 ## Author and License
 
