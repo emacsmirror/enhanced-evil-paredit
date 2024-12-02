@@ -118,19 +118,27 @@ Signals an error if deleting the region would break structure."
   "Delete text from BEG to END with TYPE respecting parenthesis.
 Save in REGISTER or in the `kill-ring' with YANK-HANDLER."
   (interactive "<R><x><y>")
-  (cond
-   ((bound-and-true-p paredit-mode)
-    (enhanced-evil-paredit-yank beg end type register yank-handler)
-    (if (eq type 'block)
-        (evil-apply-on-block #'delete-region beg end nil)
-      (delete-region beg end))
-    ;; Place cursor on beginning of line
-    (when (and (called-interactively-p 'any)
-               (eq type 'line))
-      (evil-first-non-blank)))
+  (let ((restore-column nil))
+    (unwind-protect
+        (cond
+         ((bound-and-true-p paredit-mode)
+          (setq restore-column t)
+          (enhanced-evil-paredit-yank beg end type register yank-handler)
+          (setq restore-column nil)
+          (if (eq type 'block)
+              (evil-apply-on-block #'delete-region beg end nil)
 
-   (t
-    (evil-delete beg end type register yank-handler))))
+            (delete-region beg end))
+          ;; Place cursor on beginning of line
+          (when (and (called-interactively-p 'any)
+                     (eq type 'line))
+            (evil-first-non-blank)))
+
+         (t
+          (setq restore-column nil)
+          (evil-delete beg end type register yank-handler)))
+      (when (and restore-column (boundp 'evil-operator-start-col))
+        (move-to-column evil-operator-start-col)))))
 
 (evil-define-operator enhanced-evil-paredit-delete-line
   (beg end &optional type register yank-handler)
