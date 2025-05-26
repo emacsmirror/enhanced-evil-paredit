@@ -148,15 +148,14 @@ Save in REGISTER or in the `kill-ring' with YANK-HANDLER."
 (evil-define-operator enhanced-evil-paredit-delete-line
   (beg end &optional type register yank-handler)
   "Delete to end of line respecting parenthesis."
-  :motion nil
-  :keep-visual t
+  :motion evil-end-of-line-or-visual-line
   (interactive "<R><x>")
   (cond
    ((bound-and-true-p paredit-mode)
     (let* ((beg (point))
            (end (enhanced-evil-paredit-kill-end)))
       (enhanced-evil-paredit-delete beg end
-                                  type register yank-handler)))
+                                    type register yank-handler)))
 
    (t
     (evil-delete-line beg end type register yank-handler))))
