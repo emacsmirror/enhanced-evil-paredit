@@ -59,7 +59,7 @@
   "Non-nil to prevent parenthesis imbalance when pressing p or P in normal mode.
 This is an experimental feature."
   :type 'boolean
-  :group 'group)
+  :group 'enhanced-evil-paredit)
 
 (defvar enhanced-evil-paredit-mode-map (make-sparse-keymap)
   "Keymap for `enhanced-evil-paredit-mode'.")
@@ -172,25 +172,28 @@ Save in REGISTER or in the `kill-ring' with YANK-HANDLER."
          (end-of-list-p (save-excursion
                           (paredit-forward-sexps-to-kill (point) eol))))
     (if end-of-list-p (progn (up-list) (backward-char)))
-    (cond ((paredit-in-string-p)
-           (if (save-excursion (paredit-skip-whitespace t (line-end-position))
-                               (eolp))
-               (kill-line)
-             (save-excursion
-               ;; Be careful not to split an escape sequence.
-               (if (paredit-in-string-escape-p)
-                   (backward-char))
-               (min (line-end-position)
-                    (cdr (paredit-string-start+end-points))))))
-          ((paredit-in-comment-p)
-           eol)
-          (t (if (and (not end-of-list-p)
-                      (eq (line-end-position) eol))
-                 eol
-               (point))))))
+    (cond
+     ((paredit-in-string-p)
+      (if (save-excursion (paredit-skip-whitespace t (line-end-position))
+                          (eolp))
+          (kill-line)
+        (save-excursion
+          ;; Be careful not to split an escape sequence.
+          (if (paredit-in-string-escape-p)
+              (backward-char))
+          (min (line-end-position)
+               (cdr (paredit-string-start+end-points))))))
+
+     ((paredit-in-comment-p)
+      eol)
+
+     (t (if (and (not end-of-list-p)
+                 (eq (line-end-position) eol))
+            eol
+          (point))))))
 
 (evil-define-operator enhanced-evil-paredit-change
-  (beg end type register yank-handler delete-func)
+  (beg end type register yank-handler &optional delete-func)
   "Change text from BEG to END of TYPE using REGISTER and YANK-HANDLER.
 Save in REGISTER or the `kill-ring' with YANK-HANDLER.
 DELETE-FUNC is a function for deleting text, default `evil-delete'.
