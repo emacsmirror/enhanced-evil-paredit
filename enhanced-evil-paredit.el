@@ -69,7 +69,11 @@ This is an experimental feature."
   "Minor mode for setting up Evil with paredit in a single buffer."
   :lighter " EParedit"
   :group 'enhanced-evil-paredit
-  :keymap enhanced-evil-paredit-mode-map)
+  :keymap enhanced-evil-paredit-mode-map
+  (when (and enhanced-evil-paredit-mode
+             (fboundp 'eldoc-add-command-completions))
+    (eldoc-add-command-completions "enhanced-evil-paredit-")
+    (eldoc-add-command-completions "paredit-")))
 
 (defun enhanced-evil-paredit--check-region (beg end)
   "Ensure region from BEG to END maintains parenthesis balance.
