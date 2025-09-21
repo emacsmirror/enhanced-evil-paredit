@@ -3,7 +3,7 @@
 [![MELPA](https://melpa.org/packages/enhanced-evil-paredit-badge.svg)](https://melpa.org/#/enhanced-evil-paredit)
 [![MELPA Stable](https://stable.melpa.org/packages/enhanced-evil-paredit-badge.svg)](https://stable.melpa.org/#/enhanced-evil-paredit)
 ![License](https://img.shields.io/github/license/jamescherti/enhanced-evil-paredit.el)
-![](https://raw.githubusercontent.com/jamescherti/enhanced-evil-paredit.el/main/.images/made-for-gnu-emacs.svg)
+![](https://jamescherti.com/misc/made-for-gnu-emacs.svg)
 
 The **enhanced-evil-paredit** package prevents parenthesis imbalance when using *evil-mode* with *paredit*. It intercepts *evil-mode* commands such as delete, change, and paste, blocking their execution if they would break the parenthetical structure. This guarantees that your Lisp code remains syntactically correct while retaining the editing features of *evil-mode*.
 
