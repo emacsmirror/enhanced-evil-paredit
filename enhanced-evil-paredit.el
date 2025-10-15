@@ -47,7 +47,8 @@
 
 ;;; Code:
 
-(require 'evil)
+(eval-and-compile
+  (require 'evil))
 (require 'paredit)
 
 (defgroup enhanced-evil-paredit nil
