@@ -39,7 +39,7 @@ Here are the enhancements in `enhanced-evil-paredit`:
 * Handles paste using `p` and `P`, ensuring that the pasted text has balanced parentheses.
 * Fix call to a non-existent function `(evil-called-interactively-p)`, which has been replaced by `(called-interactively-p 'any)`.
 * Add new functions: `enhanced-evil-paredit-backward-delete` and `enhanced-evil-paredit-forward-delete`.
-* `enhanced-evil-paredit-mode` only uses the paredit functions when `paredit-mode` is enabled. It acts as a wrapper that delegates commands to Paredit when Paredit is enabled and otherwise uses standard Evil commands. (The difference in behavior is that with Paredit, structural editing operations maintain balanced parentheses, whereas without Paredit, the same operations are handled by Evil motions and can break Lisp structure.)
+* `enhanced-evil-paredit-mode` only uses the paredit functions when `paredit-mode` is enabled. It acts as a wrapper that delegates commands to Paredit when Paredit is enabled and otherwise uses standard Evil commands. (The difference in behavior is that with `paredit-mode`, structural editing operations preserve balanced parentheses and Lisp structure, whereas without `paredit-mode`, the same operations rely on Evil motions and can disrupt parentheses and overall code structure.)
 * Add lexical binding with `lexical-binding: t`.
 * Suppress Emacs Lisp warnings and add Melpa tests.
 * Refactor and improve `enhanced-evil-paredit`.
