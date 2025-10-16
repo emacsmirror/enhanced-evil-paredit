@@ -16,6 +16,15 @@ To install *enhanced-evil-paredit* from MELPA:
 1. If you haven't already done so, [add MELPA repository to your Emacs configuration](https://melpa.org/#/getting-started).
 2. Add the following code to the Emacs init file to install *enhanced-evil-paredit*:
 ```emacs-lisp
+;; `paredit-mode' is a requirement
+(use-package paredit
+  :ensure t
+  :commands paredit-mode
+  :hook
+  (emacs-lisp-mode . paredit-mode)
+  :config
+  (define-key paredit-mode-map (kbd "RET") nil))
+
 (use-package enhanced-evil-paredit
   :ensure t
   :config
@@ -32,7 +41,7 @@ Here are the enhancements in `enhanced-evil-paredit`:
 * Handles paste using `p` and `P`, ensuring that the pasted text has balanced parentheses.
 * Fix call to a non-existent function `(evil-called-interactively-p)`, which has been replaced by `(called-interactively-p 'any)`.
 * Add new functions: `enhanced-evil-paredit-backward-delete` and `enhanced-evil-paredit-forward-delete`.
-* `enhanced-evil-paredit-mode` only uses the paredit functions when paredit is enabled. Otherwise, `enhanced-evil-paredit-mode` uses Evil functions.
+* `enhanced-evil-paredit-mode` only uses the paredit functions when `paredit-mode` is enabled. It acts as a wrapper that delegates commands to Paredit when Paredit is enabled and otherwise uses standard Evil commands. (The difference in behavior is that with Paredit, structural editing operations maintain balanced parentheses, whereas without Paredit, the same operations are handled by Evil motions and can break Lisp structure.)
 * Add lexical binding with `lexical-binding: t`.
 * Suppress Emacs Lisp warnings and add Melpa tests.
 * Refactor and improve `enhanced-evil-paredit`.
