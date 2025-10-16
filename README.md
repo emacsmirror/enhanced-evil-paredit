@@ -21,14 +21,12 @@ To install *enhanced-evil-paredit* from MELPA:
   :ensure t
   :commands paredit-mode
   :hook
-  (emacs-lisp-mode . paredit-mode)
-  :config
-  (define-key paredit-mode-map (kbd "RET") nil))
+  (emacs-lisp-mode . paredit-mode))
 
 (use-package enhanced-evil-paredit
   :ensure t
-  :config
-  (add-hook 'paredit-mode-hook #'enhanced-evil-paredit-mode))
+  :commands enhanced-evil-paredit-mode
+  :hook (paredit-mode . enhanced-evil-paredit-mode))
 ```
 
 ## Frequently asked questions
