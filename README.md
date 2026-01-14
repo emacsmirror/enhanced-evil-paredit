@@ -55,7 +55,7 @@ Here are the enhancements in `enhanced-evil-paredit`:
 
 The `enhanced-evil-paredit` Emacs package has been written by Roman Gonzalez and [James Cherti](https://www.jamescherti.com/). It is distributed under terms of the GNU General Public License version 3, or, at your choice, any later version.
 
-Copyright (C) 2024-2025 James Cherti
+Copyright (C) 2024-2026 James Cherti
 
 Copyright (C) 2012-2015 Roman Gonzalez
 
