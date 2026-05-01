@@ -271,6 +271,11 @@ The return value is the yanked text."
     (funcall paste-func count register yank-handler))
 
    (t (let ((undo-handle (prepare-change-group))
+            ;; Don't truncate any undo data in the middle of this, otherwise
+            ;; Emacs might truncate part of the resulting undo step.
+            (undo-outer-limit nil)
+            (undo-limit most-positive-fixnum)
+            (undo-strong-limit most-positive-fixnum)
             (point (point)))
         (unwind-protect
             (progn
@@ -285,6 +290,7 @@ The return value is the yanked text."
                     (when error
                       (evil-delete beg end nil ?_)
                       (goto-char point))))))
+          (accept-change-group undo-handle)
           (undo-amalgamate-change-group undo-handle))))))
 
 (evil-define-command enhanced-evil-paredit-paste-after
