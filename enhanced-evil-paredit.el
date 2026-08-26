@@ -7,7 +7,7 @@
 ;; Original author: Roman Gonzalez <romanandreg@gmail.com>
 ;; Version: 1.0.5
 ;; URL: https://github.com/jamescherti/enhanced-evil-paredit.el
-;; Keywords: convenience
+;; Keywords: convenience, lisp
 ;; Package-Requires: ((emacs "24.1") (evil "1.0.9") (paredit "25beta"))
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -58,7 +58,7 @@
 
 (defgroup enhanced-evil-paredit nil
   "Evil Customization group for paredit-style structural editing."
-  :group 'enhanced-evil-paredit
+  :group 'convenience
   :prefix "enhanced-evil-paredit-")
 
 (defcustom enhanced-evil-paredit-handle-paste nil
