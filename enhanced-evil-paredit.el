@@ -70,6 +70,15 @@ This is an experimental feature."
 (defvar enhanced-evil-paredit-mode-map (make-sparse-keymap)
   "Keymap for `enhanced-evil-paredit-mode'.")
 
+(declare-function pos-bol nil)
+(declare-function pos-eol nil)
+
+(defalias 'enhanced-evil-paredit--pos-bol
+  (if (fboundp 'pos-bol) #'pos-bol #'line-beginning-position))
+
+(defalias 'enhanced-evil-paredit--pos-eol
+  (if (fboundp 'pos-eol) #'pos-eol #'line-end-position))
+
 ;;;###autoload
 (define-minor-mode enhanced-evil-paredit-mode
   "Minor mode for setting up Evil with paredit in a single buffer."
@@ -174,27 +183,27 @@ Save in REGISTER or in the `kill-ring' with YANK-HANDLER."
   "Return the position where `paredit-kill' would kill to."
   (when (paredit-in-char-p)             ; Move past the \ and prefix.
     (backward-char 2))                  ; (# in Scheme/CL, ? in elisp)
-  (let* ((eol (line-end-position))
+  (let* ((eol (enhanced-evil-paredit--pos-eol))
          (end-of-list-p (save-excursion
                           (paredit-forward-sexps-to-kill (point) eol))))
     (if end-of-list-p (progn (up-list) (backward-char)))
     (cond
      ((paredit-in-string-p)
-      (if (save-excursion (paredit-skip-whitespace t (line-end-position))
+      (if (save-excursion (paredit-skip-whitespace t (enhanced-evil-paredit--pos-eol))
                           (eolp))
           (kill-line)
         (save-excursion
           ;; Be careful not to split an escape sequence.
           (if (paredit-in-string-escape-p)
               (backward-char))
-          (min (line-end-position)
+          (min (enhanced-evil-paredit--pos-eol)
                (cdr (paredit-string-start+end-points))))))
 
      ((paredit-in-comment-p)
       eol)
 
      (t (if (and (not end-of-list-p)
-                 (eq (line-end-position) eol))
+                 (eq (enhanced-evil-paredit--pos-eol) eol))
             eol
           (point))))))
 
@@ -231,7 +240,7 @@ of the block."
 (defun enhanced-evil-paredit-change-whole-line ()
   "Change whole line."
   (interactive)
-  (goto-char (line-beginning-position))
+  (goto-char (enhanced-evil-paredit--pos-bol))
   (enhanced-evil-paredit-change-line nil nil)
   (indent-according-to-mode))
 
